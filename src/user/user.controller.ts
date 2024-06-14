@@ -45,4 +45,9 @@ export class UserController {
 
     return null;
   }
+
+  @MessagePattern(UserMsg.PATCH)  
+  patch(payload: { id: string; partialUserDTO: Partial<UserDTO> }) {
+    return this.userService.patch(payload.id, payload.partialUserDTO);
+  }
 }

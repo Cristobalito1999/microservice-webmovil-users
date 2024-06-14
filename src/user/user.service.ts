@@ -50,4 +50,17 @@ export class UserService {
       msg: 'Deleted',
     };
   }
+
+  async patch(id: string, partialUserDTO: Partial<UserDTO>): Promise<IUser> {
+    const updateData = { ...partialUserDTO }; 
+    if (updateData.password) {
+      const hash = await this.hashPassword(updateData.password);
+      updateData.password = hash;
+    }
+  
+    return await this.model.findByIdAndUpdate(id, updateData, { new: true });
+  }
+
+
+  
 }
